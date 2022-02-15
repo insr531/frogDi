@@ -11,9 +11,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static("client/build"));
+
 app.use("/googleApi", googleApi);
-
-app.get('/', (req, res) => res.send('home page'));
-
 
 app.listen(PORT, () => console.log(`Server Started ${PORT}`));
