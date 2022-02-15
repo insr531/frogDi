@@ -20,8 +20,7 @@ export default function FileTable() {
 
    const downloadId = (id) => {
     axios
-      // .post(`http://localhost:5000/googleApi/download/` + id)
-      .post(`http://www.frogdi.com/googleApi/download/` + id)
+      .post(`http://localhost:8080/googleApi/download/` + id)
       .then((response) => {})
   }
 
