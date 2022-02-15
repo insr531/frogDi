@@ -18,9 +18,10 @@ export default function FileTable() {
     if(tickerInfo!=null) setData(tickerInfo.data)
    },[tickerInfo])
 
-  const downloadId = (id) => {
+   const downloadId = (id) => {
     axios
-      .post(`http://localhost:5000/googleApi/download/` + id)
+      // .post(`http://localhost:5000/googleApi/download/` + id)
+      .post(`http://www.frogdi.com/googleApi/download/` + id)
       .then((response) => {})
   }
 
