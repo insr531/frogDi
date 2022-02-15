@@ -1,0 +1,54 @@
+.productList{
+    flex: 1;
+    margin: 10px;
+    padding: 30px;
+    padding-bottom: 60px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+
+.productListItem{
+    display: flex;
+    align-items: center;
+}
+
+.productListImg{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.productListDownload{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #0084ff;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+
+}
+
+.productListEdit{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.productListDelete{
+    color: red;
+    cursor: pointer;
+}
+
+
+.tableTitle{
+    font-size: 22px;
+    font-weight: 600;
+    margin: 10px;
+}

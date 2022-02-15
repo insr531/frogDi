@@ -1,0 +1,14 @@
+.home{
+    flex: 4;
+}
+
+.homeWidgets{
+    display: flex;
+    margin: 20px;
+}
+
+.homeTable{
+    display: flex;
+    margin: 20px;
+    height: 100vh;
+}
