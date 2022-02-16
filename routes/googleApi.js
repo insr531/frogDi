@@ -61,41 +61,26 @@ router
 
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
-        drive.files.get({ fileId: fileId }, (er, re) => { // Added
-            if (er) {
-                console.log('here downloading file ',er);
-                return;
-            }
 
-            //https://stackoverflow.com/questions/57742157/node-js-how-to-find-the-desktop-path
-            const homeDir = require('os').homedir();
-            const desktopDir = `${homeDir}/Desktop`;
-            var file_path = path.join(desktopDir, re.data.name);
-            var dest = fs.createWriteStream(file_path);
-            let progress = 0;
+        //https://stackoverflow.com/questions/57742157/node-js-how-to-find-the-desktop-path
+        const homeDir = require('os').homedir();
+        const desktopDir = `${homeDir}/Desktop`;
+        var file_path = path.join(desktopDir, re.data.name);
+        var dest = fs.createWriteStream(file_path);
+        let progress = 0;
 
-            drive.files.get(
-                { fileId, alt: 'media' },
-                { responseType: 'stream' }
-            ).then(res => {
-                res.data
-                    .on('end', () => {
-                        console.log('Done downloading file.');
-                    })
-                    .on('error', err => {
-                        console.error('Error downloading file.', err);
-                    })
-                    .on('data', d => {
-                        progress += d.length;
-                        if (process.stdout.isTTY) {
-                            process.stdout.clearLine();
-                            process.stdout.cursorTo(0);
-                            process.stdout.write(`Downloaded ${progress} bytes`);
-                        }
-                    })
-                    .pipe(dest);
-            });
-        });
+        drive.files.get({
+            fileId: fileId,
+            alt: 'media'
+          })
+              .on('end', function () {
+                console.log('Done');
+              })
+              .on('error', function (err) {
+                console.log('Error during download', err);
+              })
+              .pipe(dest);
+
     });
 
 
