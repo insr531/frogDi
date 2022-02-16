@@ -63,7 +63,7 @@ router
         var fileId = req.params.id;
         drive.files.get({ fileId: fileId }, (er, re) => { // Added
             if (er) {
-                console.log(er);
+                console.log('here downloading file ',er);
                 return;
             }
 
