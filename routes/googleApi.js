@@ -60,7 +60,7 @@ router
             { fileId: fileId, alt: "media" },
             { responseType: "stream" }, (er, re) => { // Added
                 if (er) {
-                    console.log(er);
+                    console.log("here error", er);
                     return;
                 }
 
