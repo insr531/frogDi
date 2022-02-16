@@ -1,8 +1,8 @@
 import "./featuredInfo.css"
-import { useEffect, useState, useRef } from "react"
-import { ArrowDownward, ArrowUpward, Announcement } from "@material-ui/icons"
+import { useEffect, useState } from "react"
+import { ArrowDownward, ArrowUpward } from "@material-ui/icons"
 import { TextField, Tooltip } from "@material-ui/core"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { updateTickerFilter } from "../../redux/updateTickerFilter"
 import { updateStockChart } from "../../redux/updateStockChart"
 import Autocomplete from "@material-ui/lab/Autocomplete"
@@ -63,7 +63,7 @@ export default function FeaturedInfo() {
   const defaultFilter = tickerListData[0]
 
   useEffect(() => {
-    if (initialValue++ == 0) onChangeFilter(defaultFilter)
+    if (initialValue++ === 0) onChangeFilter(defaultFilter)
   }, [])
 
   const onChangeFilter = (ticker) => {

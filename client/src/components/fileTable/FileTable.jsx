@@ -1,12 +1,9 @@
 import "./fileTable.css"
 import { DataGrid } from "@material-ui/data-grid"
 import { DeleteOutline } from "@material-ui/icons"
-import { productRows } from "../../dummyData"
-import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useSelector } from "react-redux"
-import { updateTickerFilter } from "../../redux/updateTickerFilter"
 
 export default function FileTable() {
   
