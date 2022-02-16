@@ -59,43 +59,32 @@ router
 
         drive.files.get({ fileId: fileId }, (er, re) => { // Added
             if (er) {
-                console.log("here Error", er);
+                console.log(er);
                 return;
             }
 
+            //https://stackoverflow.com/questions/57742157/node-js-how-to-find-the-desktop-path
             const homeDir = require('os').homedir();
             const desktopDir = `${homeDir}/Desktop`;
             var file_path = path.join(desktopDir, re.data.name);
             var dest = fs.createWriteStream(file_path);
-            let progress = 0;
 
             drive.files.get(
-                { fileId, alt: 'media' },
-                { responseType: 'stream' }
-            ).then(res => {
-                res.data
-                    .on('end', () => {
-                        console.log('Done downloading file.');
-                    })
-                    .on('error', err => {
-                        console.error('Error downloading file.', err);
-                    })
-                    .on('data', d => {
-                        progress += d.length;
-                        if (process.stdout.isTTY) {
-                            process.stdout.clearLine();
-                            process.stdout.cursorTo(0);
-                            process.stdout.write(`Downloaded ${progress} bytes`);
-                        }
-                    })
-                    .pipe(dest);
-            });
+                { fileId: fileId, alt: "media" },
+                { responseType: "stream" },
+                function (err, res) {
+                    res.data
+                        .on("end", () => { // Modified
+                            console.log("done");
+                        })
+                        .on("error", err => {
+                            console.log("Error", err);
+                        })
+                        .pipe(dest);
+                }
+            );
         });
-
-
-
     });
-
 
 router
     .route("/fileUpload")

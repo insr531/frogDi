@@ -18,7 +18,9 @@ export default function FileTable() {
    const downloadId = (id) => {
     axios
       .post(`/googleApi/download/` + id)
-      .then((response) => {})
+      .then((response) => {
+        alert("Download Complete!");
+      })
   }
 
   const handleDelete = (id) => {
