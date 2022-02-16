@@ -56,23 +56,35 @@ router
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
 
-        //https://stackoverflow.com/questions/57742157/node-js-how-to-find-the-desktop-path
-        const homeDir = require('os').homedir();
-        const desktopDir = `${homeDir}/Desktop`;
-        var file_path = path.join(desktopDir, re.data.name);
-        var dest = fs.createWriteStream(file_path);
+        drive.files.get(
+            { fileId: fileId, alt: "media" },
+            { responseType: "stream" }, (er, re) => { // Added
+                if (er) {
+                    console.log(er);
+                    return;
+                }
 
-        drive.files.get({
-            fileId: fileId,
-            alt: 'media'
-          })
-              .on('end', function () {
-                console.log('Done');
-              })
-              .on('error', function (err) {
-                console.log('Error during download', err);
-              })
-              .pipe(dest);
+                //https://stackoverflow.com/questions/57742157/node-js-how-to-find-the-desktop-path
+                const homeDir = require('os').homedir();
+                const desktopDir = `${homeDir}/Desktop`;
+                var file_path = path.join(desktopDir, re.data.name);
+                var dest = fs.createWriteStream(file_path);
+
+                drive.files.get(
+                    { fileId: fileId, alt: "media" },
+                    { responseType: "stream" },
+                    function (err, res) {
+                        res.data
+                            .on("end", () => { // Modified
+                                console.log("done");
+                            })
+                            .on("error", err => {
+                                console.log("Error", err);
+                            })
+                            .pipe(dest);
+                    }
+                );
+            });
 
     });
 
