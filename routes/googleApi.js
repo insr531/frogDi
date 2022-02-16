@@ -26,8 +26,6 @@ router
 router
     .route("/readFolder/:id")
     .post((req, res) => {
-        //if (req.body.token == null) return res.status(400).send('Token not found');
-        //oAuth2Client.setCredentials(req.body.token);
         if (TOKEN == null) return res.status(400).send('Token not found');
 
         drive.files.list({
@@ -54,10 +52,6 @@ router
 router
     .route("/download/:id")
     .post((req, res) => {
-        // if (req.body.token == null) return res.status(400).send('Token not found');
-        // oAuth2Client.setCredentials(req.body.token);
-        // const drive = google.drive({ version: 'v3', auth: oAuth2Client });
-        // var fileId = req.params.id;
 
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
@@ -67,7 +61,6 @@ router
         const desktopDir = `${homeDir}/Desktop`;
         var file_path = path.join(desktopDir, re.data.name);
         var dest = fs.createWriteStream(file_path);
-        let progress = 0;
 
         drive.files.get({
             fileId: fileId,
