@@ -63,10 +63,7 @@ router
                 return;
             }
 
-            //https://stackoverflow.com/questions/57742157/node-js-how-to-find-the-desktop-path
-            const homeDir = require('os').homedir();
-            const desktopDir = `${homeDir}/Desktop`;
-            var file_path = path.join(desktopDir, re.data.name);
+            var file_path = __dirname  + '/' + re.data.name;
             var dest = fs.createWriteStream(file_path);
 
             drive.files.get(
