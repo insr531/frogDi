@@ -11,6 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static("client/build"));
+if (app.get("env") === "production"){
+    const enforce = require('express-sslify');
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+}
 
 app.use("/googleApi", googleApi);
 
