@@ -21,7 +21,7 @@ export default function FeaturedInfo() {
     axios
     
     // .post(`http://localhost:3000/googleApi/readFolder/` + ticker.gid)
-      .post(`/googleApi/readFolder/` + ticker.gid)
+      .get(`/googleApi/readFolder/` + ticker.gid)
       .then((response) => {
         const dataForm = { info: ticker, data: response.data }
         setTickerFilter(dataForm)

@@ -25,7 +25,7 @@ router
 
 router
     .route("/readFolder/:id")
-    .post((req, res) => {
+    .get((req, res) => {
         //if (req.body.token == null) return res.status(400).send('Token not found');
         //oAuth2Client.setCredentials(req.body.token);
         if (TOKEN == null) return res.status(400).send('Token not found');
@@ -53,7 +53,7 @@ router
 
 router
     .route("/download/:id")
-    .post((req, res) => {
+    .get((req, res) => {
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
 
