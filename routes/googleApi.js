@@ -55,7 +55,7 @@ router
 //https://stackoverflow.com/questions/21708208/express-js-response-timeout
 router
     .route("/download/:id")
-    .post((req, res) => {
+    .get((req, res) => {
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
         var filePath = ""
@@ -67,9 +67,8 @@ router
                 return;
             }
 
-            const homeDir = require('os').homedir();
             const desktopDir = `../tmp`;
-            const fileName = re.data.name
+            fileName = re.data.name
             filePath = path.join(desktopDir, fileName);
             var dest = fs.createWriteStream(filePath);
 
