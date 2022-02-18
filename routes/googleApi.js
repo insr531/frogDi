@@ -83,13 +83,13 @@ router
                 }
             );
 
-            res.download(filePath, fileName, function (err) {
-                if (err) {
-                    console.log("Error", err);
-                } else {
-                    console.log("done");
-                }
-              })
+            // res.download(filePath, fileName, function (err) {
+            //     if (err) {
+            //         console.log("Error", err);
+            //     } else {
+            //         console.log("done");
+            //     }
+            //   })
 
         });
     });
