@@ -50,8 +50,9 @@ router
             res.send(files);
         });
     });
-
-    router
+//https://stackoverflow.com/questions/34646072/node-js-using-heroku-temp-directory-and-nodemailer
+//https://stackoverflow.com/questions/19253031/heroku-how-to-write-into-tmp-directory
+router
     .route("/download/:id")
     .post((req, res) => {
         if (TOKEN == null) return res.status(400).send('Token not found');
@@ -63,7 +64,7 @@ router
             }
 
             const homeDir = require('os').homedir();
-            const desktopDir = `${homeDir}/tmp`;
+            const desktopDir = `../tmp`;
             const fileName =  re.data.name
             var filePath = path.join(desktopDir, fileName);
             var dest = fs.createWriteStream(filePath);
