@@ -53,7 +53,7 @@ router
 
     router
     .route("/download/:id")
-    .get((req, res) => {
+    .post((req, res) => {
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
         drive.files.get({ fileId: fileId }, (er, re) => { // Added
