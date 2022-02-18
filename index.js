@@ -18,5 +18,4 @@ if (app.get("env") === "production"){
 
 app.use("/googleApi", googleApi);
 
-var server =app.listen(PORT, () => console.log(`Server Started ${PORT}`));
-server.setTimeout(500000);
+app.listen(PORT, () => console.log(`Server Started ${PORT}`));

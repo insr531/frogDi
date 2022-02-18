@@ -26,8 +26,6 @@ router
 router
     .route("/readFolder/:id")
     .get((req, res) => {
-        //if (req.body.token == null) return res.status(400).send('Token not found');
-        //oAuth2Client.setCredentials(req.body.token);
         if (TOKEN == null) return res.status(400).send('Token not found');
 
         drive.files.list({
@@ -50,97 +48,6 @@ router
             res.send(files);
         });
     });
-//https://stackoverflow.com/questions/34646072/node-js-using-heroku-temp-directory-and-nodemailer
-//https://stackoverflow.com/questions/19253031/heroku-how-to-write-into-tmp-directory
-//https://stackoverflow.com/questions/21708208/express-js-response-timeout
-router
-    .route("/download/:id")
-    .get((req, res) => {
-        if (TOKEN == null) return res.status(400).send('Token not found');
-        var fileId = req.params.id;
-        var filePath = ""
-        var fileName = ""
-
-        const driveFilesGet = drive.files.get({ fileId: fileId }, (er, re) => { // Added
-            if (er) {
-                console.log(er);
-                return;
-            }
-
-            const desktopDir = `../tmp`;
-            fileName = re.data.name
-            filePath = path.join(desktopDir, fileName);
-            var dest = fs.createWriteStream(filePath);
-
-            console.log("dest", dest);
-
-            drive.files.get(
-                { fileId: fileId, alt: "media" },
-                { responseType: "stream" },
-                function (errD, resD) {
-                    resD.data
-                        .on("end", () => { // Modified
-                            console.log("done");
-                        })
-                        .on("error", errD => {
-                            console.log("Error", errD);
-                        })
-                        .pipe(dest);
-                }
-            );
-        });
-
-        setTimeout(driveFilesGet, 15000)
-
-        res.download(filePath, fileName, function (err) {
-            if (err) {
-                console.log("Error", err);
-            } else {
-                console.log("done");
-            }
-        })
-    });
-
-router
-    .route("/fileUpload")
-    .post((req, res) => {
-        // var form = new formidable.IncomingForm();
-        // form.parse(req, (err, fields, files) => {});
-        //if (err) return res.status(400).send(err);
-        // const token = JSON.parse(fields.token);
-        // console.log(token)
-        // if (token == null) return res.status(400).send('Token not found');
-        // oAuth2Client.setCredentials(token);
-        console.log(TOKEN);
-        if (TOKEN == null) return res.status(400).send('Token not found');
-        // const filePath = path.join(__dirname, 'example.png');
-        const filePath = require('./example.png');
-        const fileMetadata = {
-            name: filePath.name,
-        };
-        const media = {
-            mimeType: filePath.type,
-            body: fs.createReadStream(filePath.path),
-        };
-        drive.files.create(
-            {
-                resource: fileMetadata,
-                media: media,
-                fields: "id",
-            },
-            (err, file) => {
-                oAuth2Client.setCredentials(null);
-                if (err) {
-                    console.error(err);
-                    res.status(400).send(err)
-                } else {
-                    res.send('Successful')
-                }
-            }
-        );
-
-    });
-
 //Needs at the set up
 router
     .route("/getAuthURL")
