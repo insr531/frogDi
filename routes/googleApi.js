@@ -51,35 +51,46 @@ router
         });
     });
 
-router
+    router
     .route("/download/:id")
     .get((req, res) => {
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
-
         drive.files.get({ fileId: fileId }, (er, re) => { // Added
             if (er) {
                 console.log(er);
                 return;
             }
 
+            const homeDir = require('os').homedir();
+            const desktopDir = `${homeDir}/tmp`;
+            const fileName =  re.data.name
+            var filePath = path.join(desktopDir, fileName);
+            var dest = fs.createWriteStream(filePath);
+
             drive.files.get(
                 { fileId: fileId, alt: "media" },
                 { responseType: "stream" },
                 function (errD, resD) {
-                    if(errD){
-                        console.log(errD);
-                        return;
-                    }
-                    res.download(resD.data, re.data.name, function(err){
-                        if (err){
-                            console.log(err)
-                        } else {
-                            console.log("done")
-                        }
-                    })
+                    resD.data
+                        .on("end", () => { // Modified
+                            console.log("done");
+                        })
+                        .on("error", errD => {
+                            console.log("Error", errD);
+                        })
+                        .pipe(dest);
                 }
             );
+
+            res.download(filePath, fileName, function (err) {
+                if (err) {
+                    console.log("Error", err);
+                } else {
+                    console.log("done");
+                }
+              })
+
         });
     });
 
