@@ -70,7 +70,7 @@ router
             var filePath = path.join(desktopDir, fileName);
             var dest = fs.createWriteStream(filePath);
 
-            drive.files.get(
+            const driveFilesGet = drive.files.get(
                 { fileId: fileId, alt: "media" },
                 { responseType: "stream" },
                 function (errD, resD) {
@@ -84,6 +84,8 @@ router
                         .pipe(dest);
                 }
             );
+
+            setTimeout(driveFilesGet, 8000)
 
             res.download(filePath, fileName, function (err) {
                 if (err) {
