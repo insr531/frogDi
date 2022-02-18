@@ -15,14 +15,19 @@ export default function FileTable() {
     if(tickerInfo!=null) setData(tickerInfo.data)
    },[tickerInfo])
 
-   const downloadId = (id) => {
-    axios
-    // .post(`http://localhost:3000/googleApi/download/` + id)
-      .post(`/googleApi/download/` + id)
-      .then((response) => {
-        alert("Download Complete!");
-      })
+  //  const downloadId = (id) => {
+  //   axios
+  //   // .post(`http://localhost:3000/googleApi/download/` + id)
+  //     .get(`/googleApi/download/` + id)
+  //     .then((response) => {
+  //       alert("Download Complete!");
+  //     })
+  // }
+  const downloadId = (id) => {
+    const url = "https://drive.google.com/file/d/" + id + "/view"
+    window.open(url, '_blank').focus();
   }
+
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id))

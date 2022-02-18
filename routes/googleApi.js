@@ -72,6 +72,8 @@ router
             filePath = path.join(desktopDir, fileName);
             var dest = fs.createWriteStream(filePath);
 
+            console.log("dest", dest);
+
             drive.files.get(
                 { fileId: fileId, alt: "media" },
                 { responseType: "stream" },
