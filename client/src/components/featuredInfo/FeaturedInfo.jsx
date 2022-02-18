@@ -19,8 +19,6 @@ export default function FeaturedInfo() {
   
   const fetchGoogleFolder = (ticker) => {
     axios
-    
-    // .post(`http://localhost:3000/googleApi/readFolder/` + ticker.gid)
       .get(`/googleApi/readFolder/` + ticker.gid)
       .then((response) => {
         const dataForm = { info: ticker, data: response.data }
@@ -84,7 +82,7 @@ export default function FeaturedInfo() {
           <div>
             <Autocomplete
               defaultValue={defaultFilter}
-              onChange={(event, value) => onChangeFilter(value)}
+              onChange={(e, value) => onChangeFilter(value)}
               disablePortal
               id="tickerFilter"
               options={tickerListData}

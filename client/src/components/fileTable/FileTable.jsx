@@ -2,7 +2,6 @@ import "./fileTable.css"
 import { DataGrid } from "@material-ui/data-grid"
 import { DeleteOutline } from "@material-ui/icons"
 import { useEffect, useState } from "react"
-import axios from "axios"
 import { useSelector } from "react-redux"
 
 export default function FileTable() {
