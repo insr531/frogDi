@@ -58,7 +58,10 @@ router
     .post((req, res) => {
         if (TOKEN == null) return res.status(400).send('Token not found');
         var fileId = req.params.id;
-        drive.files.get({ fileId: fileId }, (er, re) => { // Added
+        var filePath = ""
+        var fileName = ""
+
+        const driveFilesGet = drive.files.get({ fileId: fileId }, (er, re) => { // Added
             if (er) {
                 console.log(er);
                 return;
@@ -66,11 +69,11 @@ router
 
             const homeDir = require('os').homedir();
             const desktopDir = `../tmp`;
-            const fileName =  re.data.name
-            var filePath = path.join(desktopDir, fileName);
+            const fileName = re.data.name
+            filePath = path.join(desktopDir, fileName);
             var dest = fs.createWriteStream(filePath);
 
-            const driveFilesGet = drive.files.get(
+            drive.files.get(
                 { fileId: fileId, alt: "media" },
                 { responseType: "stream" },
                 function (errD, resD) {
@@ -84,18 +87,17 @@ router
                         .pipe(dest);
                 }
             );
-
-            setTimeout(driveFilesGet, 8000)
-
-            res.download(filePath, fileName, function (err) {
-                if (err) {
-                    console.log("Error", err);
-                } else {
-                    console.log("done");
-                }
-              })
-
         });
+
+        setTimeout(driveFilesGet, 15000)
+
+        res.download(filePath, fileName, function (err) {
+            if (err) {
+                console.log("Error", err);
+            } else {
+                console.log("done");
+            }
+        })
     });
 
 router
