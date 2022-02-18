@@ -52,6 +52,7 @@ router
     });
 //https://stackoverflow.com/questions/34646072/node-js-using-heroku-temp-directory-and-nodemailer
 //https://stackoverflow.com/questions/19253031/heroku-how-to-write-into-tmp-directory
+//https://stackoverflow.com/questions/21708208/express-js-response-timeout
 router
     .route("/download/:id")
     .post((req, res) => {
@@ -84,13 +85,13 @@ router
                 }
             );
 
-            // res.download(filePath, fileName, function (err) {
-            //     if (err) {
-            //         console.log("Error", err);
-            //     } else {
-            //         console.log("done");
-            //     }
-            //   })
+            res.download(filePath, fileName, function (err) {
+                if (err) {
+                    console.log("Error", err);
+                } else {
+                    console.log("done");
+                }
+              })
 
         });
     });
