@@ -63,21 +63,21 @@ router
                 return;
             }
 
-            var file_path = __dirname  + '/' + re.data.name;
-            var dest = fs.createWriteStream(file_path);
-
             drive.files.get(
                 { fileId: fileId, alt: "media" },
                 { responseType: "stream" },
-                function (err, res) {
-                    res.data
-                        .on("end", () => { // Modified
-                            console.log("done");
-                        })
-                        .on("error", err => {
-                            console.log("Error", err);
-                        })
-                        .pipe(dest);
+                function (errD, resD) {
+                    if(errD){
+                        console.log(errD);
+                        return;
+                    }
+                    res.download(resD.data, re.data.name, function(err){
+                        if (err){
+                            console.log(err)
+                        } else {
+                            console.log("done")
+                        }
+                    })
                 }
             );
         });
